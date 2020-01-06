@@ -1,4 +1,4 @@
-# Dortfolio - Decentralized Portfolio
+# Dortfolio - Decentralized Cryptocurrency Portfolio
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e3e4d2cd-c0c2-44bb-a7b4-37864014c344/deploy-status)](https://app.netlify.com/sites/dortfolio/deploys)
 
 ## Introduction

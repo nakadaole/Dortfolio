@@ -19,7 +19,9 @@ export default class Profile extends Component {
   	  	},
       },
       coinType:'Add your CoinType',
-      holdingPercent:"0%",
+      holdingPercent:'0%',
+      remoteCoinType:'',
+      remoteHoldingPercent:'',
   	};
   }
 
@@ -45,7 +47,7 @@ export default class Profile extends Component {
         <input value={this.state.coinType} onChange={e=>this.handleCoinTypeChange(e)}/>
         <input value={this.state.holdingPercent} onChange={e=>this.handleHoldingPercentChange(e)}/>
         <button onClick={e=>this.handlePortfolioSubmit(e)}>submit</button>
-        <p>{this.state.coinType+":"+this.state.holdingPercent}</p>
+        <p>{this.state.remoteCoinType+":"+this.state.remoteHoldingPercent}</p>
       </div> : null
     );
   }
@@ -62,16 +64,17 @@ export default class Profile extends Component {
     this.saveNewPortfolio(this.state.coinType,this.state.holdingPercent);
     this.setState({
       coinType:'Add your CoinType',
-      holdingPercent:"0%",
+      holdingPercent:'0%',
     })
+    this.fetchGaiaData()
   }
 
-  saveNewPortfolio(coinType,HoldingPercent){
+  saveNewPortfolio(coinType,holdingPercent){
     const {userSession} = this.props
 
     const newPortfolio = {
       coinType,
-      HoldingPercent,
+      holdingPercent,
       created_at: Date.now()
     }
 
@@ -83,6 +86,27 @@ export default class Profile extends Component {
           newHoldingPercent:newPortfolio.HoldingPercent,
         })
       })
+  }
+
+  fetchGaiaData(){
+    const {userSession} = this.props
+    const options = { decrypt: true }
+    userSession.getFile('portfolio.json', options)
+    .then((file) => {
+      var portfolio = JSON.parse(file || '[]')
+      console.log(portfolio)
+      this.setState({
+        remoteCoinType:portfolio.coinType,
+        remoteHoldingPercent:portfolio.holdingPercent,
+      })
+    })
+    .finally(() => {
+      console.log("read over")
+    })
+  }
+
+  componentDidMount(){
+    this.fetchGaiaData()
   }
 
   componentWillMount() {

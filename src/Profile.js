@@ -18,7 +18,7 @@ export default class Profile extends Component {
   	  	  return avatarFallbackImage;
   	  	},
       },
-      Portfolio:'Add your portfolio',
+      CoinType:'Add your CoinType',
       HoldingPercent:"0%",
   	};
   }
@@ -42,15 +42,15 @@ export default class Profile extends Component {
             Logout
           </button>
         </p>
-        <input value={this.state.Portfolio} onChange={e=>this.handlePortfolioChange(e)}/>
+        <input value={this.state.CoinType} onChange={e=>this.handleCoinTypeChange(e)}/>
         <input value={this.state.HoldingPercent} onChange={e=>this.handleHoldingPercentChange(e)}/>
         <button onClick={e=>this.handlePortfolioSubmit(e)}>submit</button>
       </div> : null
     );
   }
 
-  handlePortfolioChange(e){
-    this.setState({Portfolio: e.target.value});
+  handleCoinTypeChange(e){
+    this.setState({CoinType: e.target.value});
   }
 
   handleHoldingPercentChange(e){

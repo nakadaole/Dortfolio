@@ -18,7 +18,8 @@ export default class Profile extends Component {
   	  	  return avatarFallbackImage;
   	  	},
       },
-      Portfolio:'Add your portfolio'
+      Portfolio:'Add your portfolio',
+      HoldingPercent:"0%",
   	};
   }
 
@@ -42,6 +43,7 @@ export default class Profile extends Component {
           </button>
         </p>
         <input value={this.state.Portfolio} onChange={e=>this.handlePortfolioChange(e)}/>
+        <input value={this.state.HoldingPercent} onChange={e=>this.handleHoldingPercentChange(e)}/>
         <button onClick={e=>this.handlePortfolioSubmit(e)}>submit</button>
       </div> : null
     );
@@ -51,11 +53,15 @@ export default class Profile extends Component {
     this.setState({Portfolio: e.target.value});
   }
 
-  handlePortfolioSubmit(e){
-    
+  handleHoldingPercentChange(e){
+    this.setState({HoldingPercent: e.target.value});
   }
 
+  handlePortfolioSubmit(e){
 
+  }
+
+  
 
   componentWillMount() {
     const { userSession } = this.props;

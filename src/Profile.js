@@ -18,8 +18,8 @@ export default class Profile extends Component {
   	  	  return avatarFallbackImage;
   	  	},
       },
-      CoinType:'Add your CoinType',
-      HoldingPercent:"0%",
+      coinType:'Add your CoinType',
+      holdingPercent:"0%",
   	};
   }
 
@@ -42,26 +42,48 @@ export default class Profile extends Component {
             Logout
           </button>
         </p>
-        <input value={this.state.CoinType} onChange={e=>this.handleCoinTypeChange(e)}/>
-        <input value={this.state.HoldingPercent} onChange={e=>this.handleHoldingPercentChange(e)}/>
+        <input value={this.state.coinType} onChange={e=>this.handleCoinTypeChange(e)}/>
+        <input value={this.state.holdingPercent} onChange={e=>this.handleHoldingPercentChange(e)}/>
         <button onClick={e=>this.handlePortfolioSubmit(e)}>submit</button>
+        <p>{this.state.coinType+":"+this.state.holdingPercent}</p>
       </div> : null
     );
   }
 
   handleCoinTypeChange(e){
-    this.setState({CoinType: e.target.value});
+    this.setState({coinType: e.target.value});
   }
 
   handleHoldingPercentChange(e){
-    this.setState({HoldingPercent: e.target.value});
+    this.setState({holdingPercent: e.target.value});
   }
 
   handlePortfolioSubmit(e){
-
+    this.saveNewPortfolio(this.state.coinType,this.state.holdingPercent);
+    this.setState({
+      coinType:'Add your CoinType',
+      holdingPercent:"0%",
+    })
   }
 
-  
+  saveNewPortfolio(coinType,HoldingPercent){
+    const {userSession} = this.props
+
+    const newPortfolio = {
+      coinType,
+      HoldingPercent,
+      created_at: Date.now()
+    }
+
+    const options = {encrypt:true}
+    userSession.putFile('portfolio.json',JSON.stringify(newPortfolio),options)
+      .then(()=>{
+        this.setState({
+          newCoinType:newPortfolio.coinType,
+          newHoldingPercent:newPortfolio.HoldingPercent,
+        })
+      })
+  }
 
   componentWillMount() {
     const { userSession } = this.props;

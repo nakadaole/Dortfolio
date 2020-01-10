@@ -17,7 +17,8 @@ export default class Profile extends Component {
   	  	avatarUrl() {
   	  	  return avatarFallbackImage;
   	  	},
-  	  },
+      },
+      Portfolio:'Add your portfolio'
   	};
   }
 
@@ -40,9 +41,21 @@ export default class Profile extends Component {
             Logout
           </button>
         </p>
+        <input value={this.state.Portfolio} onChange={e=>this.handlePortfolioChange(e)}/>
+        <button onClick={e=>this.handlePortfolioSubmit(e)}>submit</button>
       </div> : null
     );
   }
+
+  handlePortfolioChange(e){
+    this.setState({Portfolio: e.target.value});
+  }
+
+  handlePortfolioSubmit(e){
+    
+  }
+
+
 
   componentWillMount() {
     const { userSession } = this.props;
